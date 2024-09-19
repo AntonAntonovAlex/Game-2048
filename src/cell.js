@@ -43,7 +43,6 @@ export class Cell {
     }
 
     setColorCell(value) {
-        //this.ctx.fillStyle = `rgb(${Math.floor(255 - value / 9)}, ${Math.floor(255 - value / 9)}, 0)`;
         this.ctx.fillStyle = COLORS[value];
         this.ctx.fillRect(0, 0, 300, 150);
     };
