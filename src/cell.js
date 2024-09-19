@@ -20,10 +20,19 @@ export class Cell {
         this.value = null;
         this.isEmpty = true;
         this.isMerge = false;
+        this.isMoved = false;
         cell.classList.add("canvas");
         cell.setAttribute('id', `canvas-${this.elementNumber}`)
         this.ctx = cell.getContext("2d");
         canvasBoard.append(cell);
+    }
+
+    getIsMovedCell() {
+        return this.isMoved;
+    }
+
+    setIsMovedCell() {
+        this.isMoved = true;
     }
 
     getIsEmptyCell() {
