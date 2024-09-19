@@ -2,6 +2,7 @@
   "name": "2048",
   "version": "1.0.0",
   "main": "index.js",
+  "homepage": "https://AntonAntonovAlex.github.io/Game-2048.git",
   "scripts": {
     "start": "webpack serve",
     "build": "webpack"
