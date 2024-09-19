@@ -56,6 +56,11 @@ export class Board {
                             this.moveCellWithMergeVertically(i, j, s);
                         }
                     } else {
+                        if (j <= 2) {
+                            if (this.cells[((j + 1) * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell()) {
+                            this.moveCellWithMergeVertically(i, j + 1, s + 1);
+                            }
+                        }
                         emptyCell = s;
                         s--;
                         while (s >= 0) {
@@ -86,6 +91,11 @@ export class Board {
                             this.moveCellWithMergeVertically(i, j, s);
                         }
                     } else {
+                        if (j >= 1) {
+                            if (this.cells[((j - 1) * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell()) {
+                            this.moveCellWithMergeVertically(i, j - 1, s - 1);
+                            }
+                        }
                         emptyCell = s;
                         s++;
                         while (s <= 3) {
@@ -116,6 +126,11 @@ export class Board {
                             this.moveCellWithMergeHorizontally(i, j, s);
                         }
                     } else {
+                        if (j <= 2) {
+                            if (this.cells[(i * 4 + j + 1)].getValueCell() === this.cells[(i * 4 + j)].getValueCell()) {
+                            this.moveCellWithMergeHorizontally(i, j + 1, s + 1);
+                            }
+                        }
                         emptyCell = s;
                         s--;
                         while (s >= 0) {
@@ -146,6 +161,11 @@ export class Board {
                             this.moveCellWithMergeHorizontally(i, j, s);
                         }
                     } else {
+                        if (j >= 1) {
+                            if (this.cells[(i * 4 + j - 1)].getValueCell() === this.cells[(i * 4 + j)].getValueCell()) {
+                            this.moveCellWithMergeHorizontally(i, j - 1, s - 1);
+                            }
+                        }
                         emptyCell = s;
                         s++;
                         while (s < 4) {
@@ -197,6 +217,7 @@ export class Board {
         this.cells[(emptyCell * COLUMNS_COUNT + columnValue)].setColorCell(value);
         this.cells[(emptyCell * COLUMNS_COUNT + columnValue)].setValueCell(value);
         this.cells[(emptyCell * COLUMNS_COUNT + columnValue)].setIsMergeCell();
+        this.cells[(emptyCell * COLUMNS_COUNT + columnValue)].setIsMovedCell();
         this.greatestValue = this.greatestValue > value ? this.greatestValue : value;
         this.isMovedCell = true;
         this.scoreValue.textContent = +this.scoreValue.textContent + value;
@@ -205,6 +226,7 @@ export class Board {
     resetIsMergeCell() {
         this.cells.forEach((cell) => {
             cell.isMerge = false;
+            cell.isMoved = false;
         }
     )
     };
