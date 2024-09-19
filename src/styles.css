@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgray;
+}
+
+.game-board {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.canvas {
+    border-radius: 2px;
+    width: 70px;
+    height: 70px;
+}
+
+.score {
+    margin-bottom: 15px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.canvas-board {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-template-rows: repeat(4, 70px);
+    gap: 4px;
+    padding: 4px;
+}
