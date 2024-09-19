@@ -1,2 +1,3 @@
 Game-2048
-Ссылка на проект
+
+https://antonantonovalex.github.io/Game-2048/
