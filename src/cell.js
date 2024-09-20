@@ -10,7 +10,7 @@ const COLORS = {
     512: '#664f09',
     1024: '#784904',
     2028: '#783e04',
-}
+};
 
 export class Cell {
     constructor(canvasBoard, elementNumber) {
@@ -22,34 +22,34 @@ export class Cell {
         this.isMerge = false;
         this.isMoved = false;
         cell.classList.add("canvas");
-        cell.setAttribute('id', `canvas-${this.elementNumber}`)
+        cell.setAttribute('id', `canvas-${this.elementNumber}`);
         this.ctx = cell.getContext("2d");
         canvasBoard.append(cell);
-    }
+    };
 
     getIsMovedCell() {
         return this.isMoved;
-    }
+    };
 
     setIsMovedCell() {
         this.isMoved = true;
-    }
+    };
 
     getIsEmptyCell() {
         return this.isEmpty;
-    }
+    };
 
     getIsMergeCell() {
         return this.isMerge;
-    }
+    };
 
     setIsMergeCell() {
         this.isMerge = true;
-    }
+    };
 
     getValueCell() {
         return this.value;
-    }
+    };
 
     setColorCell(value) {
         this.ctx.fillStyle = COLORS[value];
@@ -72,4 +72,4 @@ export class Cell {
         this.isEmpty = true;
         this.isMerge = false;
     };
-}
+};

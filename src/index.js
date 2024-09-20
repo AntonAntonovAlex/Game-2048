@@ -1,12 +1,13 @@
 import './styles.css'
 import { Board } from "./board.js";
 
+const MIN_DIFF_X_Y = 50;
+const MAX_GREATEST_VALUE = 2048;
 const canvasBoard = document.getElementById("canvas");
 let board = new Board(canvasBoard);
 let mouseDownClickX;
 let mouseDownClickY;
-const MIN_DIFF_X_Y = 50;
-const MAX_GREATEST_VALUE = 2048;
+
 board.getInitialRandomFilledCell();
 board.getInitialRandomFilledCell();
 setupButtonClick();
@@ -14,20 +15,20 @@ setupMouseDownClick();
 setupMouseUpClick();
 
 function setupButtonClick() {
-    window.addEventListener("keydown", handleButtonClick, {once: true})
+    window.addEventListener("keydown", handleButtonClick, {once: true});
 };
 
 function setupMouseDownClick() {
-    window.addEventListener("mousedown", handleMouseDownClick)
+    window.addEventListener("mousedown", handleMouseDownClick);
 };
 
-function handleMouseDownClick(event) {;
+function handleMouseDownClick(event) {
     mouseDownClickX = event.clientX;
     mouseDownClickY = event.clientY;
-}
+};
 
 function setupMouseUpClick() {
-    window.addEventListener("mouseup", handleMouseUpClick)
+    window.addEventListener("mouseup", handleMouseUpClick);
 };
 
 function handleMouseUpClick(event) {
@@ -53,7 +54,7 @@ function handleMouseUpClick(event) {
         board.getRandomFilledCell();
     };
 
-}
+};
 
 function handleButtonClick(event) {
     switch (event.key) {
@@ -84,7 +85,13 @@ function handleButtonClick(event) {
     };
 
     board.getRandomFilledCell();
-    setupButtonClick()
+
+    if (!board.canContinueGame()) {
+        alert('Нельзя сделать ход');
+        restartGame();
+    };
+
+    setupButtonClick();
 };
 
 function moveUp() {
