@@ -2,7 +2,7 @@ import { Cell } from "./cell.js";
 
 const COLUMNS_COUNT = 4;
 const CELLS_COUNT = COLUMNS_COUNT * COLUMNS_COUNT;
-const INIAL_VALUE = 2;
+const INITIAL_VALUE = 2;
 const scoreValue = document.getElementById("score-value");
 
 export class Board {
@@ -12,36 +12,39 @@ export class Board {
         this.scoreValue = scoreValue;
         this.scoreValue.textContent = 0;
         this.greatestValue = 0;
+
         for (let i = 0; i < CELLS_COUNT; i++) {
             this.cells.push(
                 new Cell(canvasBoard, i)
             );
-        }
+        };
     };
 
     getInitialRandomFilledCell() {
         const randomIndex = Math.floor(Math.random() * this.cells.length);
+
         if (this.cells[randomIndex].getIsEmptyCell()) {
-            this.cells[randomIndex].setColorCell(INIAL_VALUE);
-            this.cells[randomIndex].setValueCell(INIAL_VALUE);
+            this.cells[randomIndex].setColorCell(INITIAL_VALUE);
+            this.cells[randomIndex].setValueCell(INITIAL_VALUE);
         } else {
             this.getInitialRandomFilledCell();
-        }
+        };
     };
 
     getRandomFilledCell() {
         if (this.isMovedCell) {
             const randomIndex = Math.floor(Math.random() * this.cells.length);
+
                 if (this.cells[randomIndex].getIsEmptyCell()) {
                     const randomValue = (Math.random() > 0.1 ? 2 : 4);
                     this.cells[randomIndex].setColorCell(randomValue);
                     this.cells[randomIndex].setValueCell(randomValue);
                 } else {
                     this.getRandomFilledCell();
-                }
-                this.isMovedCell = false;
-        }
+                };
 
+                this.isMovedCell = false;
+        };
     };
 
     moveCellsUp() {
@@ -227,12 +230,47 @@ export class Board {
         this.cells.forEach((cell) => {
             cell.isMerge = false;
             cell.isMoved = false;
-        }
-    )
+            }
+        );
     };
 
     getGreatestValue() {
         return this.greatestValue;
     };
 
+    isCellAlive(cell, index) {
+        const cellCurrent = cell.value;
+
+        if (!cellCurrent) {
+            return true;
+        };
+
+        const cellBottom = this.cells[index + COLUMNS_COUNT];
+
+        if (cellBottom && cellBottom.value === cellCurrent) {
+            return true;
+        };
+
+        const cellTop = this.cells[index - COLUMNS_COUNT];
+
+        if (cellTop && cellTop.value === cellCurrent) {
+            return true;
+        };
+
+        const cellLeft = (index % COLUMNS_COUNT) && this.cells[index - 1];
+
+        if (cellLeft && cellLeft.value === cellCurrent) {
+            return true;
+        };
+
+        const cellRight = ((index + 1) % COLUMNS_COUNT) && this.cells[index + 1];
+
+        if (cellRight && cellRight.value === cellCurrent) {
+            return true;
+        };
+    };
+
+    canContinueGame() {
+        return this.cells.some((cell, index) => this.isCellAlive(cell, index));
+    };
 };
