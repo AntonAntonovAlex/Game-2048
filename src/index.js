@@ -57,7 +57,7 @@ function handleMouseUpClick(event) {
 };
 
 function handleButtonClick(event) {
-    switch (event.key) {
+     switch (event.key) {
         case "ArrowUp":
             moveUp();
             break;
@@ -86,12 +86,16 @@ function handleButtonClick(event) {
 
     board.getRandomFilledCell();
 
+    setTimeout(checkContinueGame, 500);
+
+    setupButtonClick();
+};
+
+function checkContinueGame() {
     if (!board.canContinueGame()) {
         alert('Нельзя сделать ход');
         restartGame();
-    };
-
-    setupButtonClick();
+    }; 
 };
 
 function moveUp() {

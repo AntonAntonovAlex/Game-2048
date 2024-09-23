@@ -36,7 +36,7 @@ export class Board {
             const randomIndex = Math.floor(Math.random() * this.cells.length);
 
                 if (this.cells[randomIndex].getIsEmptyCell()) {
-                    const randomValue = (Math.random() > 0.1 ? 2 : 4);
+                    const randomValue = (Math.random() > 0.1 ? INITIAL_VALUE : INITIAL_VALUE * INITIAL_VALUE);
                     this.cells[randomIndex].setColorCell(randomValue);
                     this.cells[randomIndex].setValueCell(randomValue);
                 } else {
@@ -48,33 +48,33 @@ export class Board {
     };
 
     moveCellsUp() {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 1; j < 4; j++) {
-                if (!this.cells[(j * 4 + i)].isEmpty) {
-                    let s = j - 1;
+        for (let row = 0; row < COLUMNS_COUNT; row++) {
+            for (let col = 1; col < COLUMNS_COUNT; col++) {
+                if (!this.cells[(col * COLUMNS_COUNT + row)].isEmpty) {
+                    let offset = col - 1;
                     let emptyCell = null;
 
-                    if (!this.cells[(s * 4 + i)].isEmpty) {
-                        if (this.cells[(s * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell() && !this.cells[(s * 4 + i)].getIsMergeCell()) {
-                            this.moveCellWithMergeVertically(i, j, s);
+                    if (!this.cells[(offset * COLUMNS_COUNT + row)].isEmpty) {
+                        if (this.cells[(offset * COLUMNS_COUNT + row)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell() && !this.cells[(offset * COLUMNS_COUNT + row)].getIsMergeCell()) {
+                            this.moveCellWithMergeVertically(row, col, offset);
                         }
                     } else {
-                        if (j <= 2) {
-                            if (this.cells[((j + 1) * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell()) {
-                            this.moveCellWithMergeVertically(i, j + 1, s + 1);
+                        if (col <= 2) {
+                            if (this.cells[((col + 1) * COLUMNS_COUNT + row)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell()) {
+                            this.moveCellWithMergeVertically(row, col + 1, offset + 1);
                             }
                         }
-                        emptyCell = s;
-                        s--;
-                        while (s >= 0) {
-                            if (this.cells[(s * 4 + i)].isEmpty) {
-                                emptyCell = s;
-                                s--;
+                        emptyCell = offset;
+                        offset--;
+                        while (offset >= 0) {
+                            if (this.cells[(offset * COLUMNS_COUNT + row)].isEmpty) {
+                                emptyCell = offset;
+                                offset--;
                             } else break;
                         }
                     }
                     if (emptyCell !== null) {
-                        this.moveCellVertically(j, i, emptyCell);
+                        this.moveCellVertically(col, row, emptyCell);
                     }
                 }
             }
@@ -83,33 +83,33 @@ export class Board {
     };
 
     moveCellsDown() {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 2; j >= 0; j--) {
-                if (!this.cells[(j * 4 + i)].isEmpty) {
-                    let s = j + 1;
+        for (let row = 0; row < COLUMNS_COUNT; row++) {
+            for (let col = 2; col >= 0; col--) {
+                if (!this.cells[(col * COLUMNS_COUNT + row)].isEmpty) {
+                    let offset = col + 1;
                     let emptyCell = null;
 
-                    if (!this.cells[(s * 4 + i)].isEmpty) {
-                        if (this.cells[(s * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell() && !this.cells[(s * 4 + i)].getIsMergeCell()) {
-                            this.moveCellWithMergeVertically(i, j, s);
+                    if (!this.cells[(offset * COLUMNS_COUNT + row)].isEmpty) {
+                        if (this.cells[(offset * COLUMNS_COUNT + row)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell() && !this.cells[(offset * COLUMNS_COUNT + row)].getIsMergeCell()) {
+                            this.moveCellWithMergeVertically(row, col, offset);
                         }
                     } else {
-                        if (j >= 1) {
-                            if (this.cells[((j - 1) * 4 + i)].getValueCell() === this.cells[(j * 4 + i)].getValueCell()) {
-                            this.moveCellWithMergeVertically(i, j - 1, s - 1);
+                        if (col >= 1) {
+                            if (this.cells[((col - 1) * COLUMNS_COUNT + row)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell()) {
+                            this.moveCellWithMergeVertically(row, col - 1, offset - 1);
                             }
                         }
-                        emptyCell = s;
-                        s++;
-                        while (s <= 3) {
-                            if (this.cells[(s * 4 + i)].isEmpty) {
-                                emptyCell = s;
-                                s++;
+                        emptyCell = offset;
+                        offset++;
+                        while (offset <= 3) {
+                            if (this.cells[(offset * COLUMNS_COUNT + row)].isEmpty) {
+                                emptyCell = offset;
+                                offset++;
                             } else break;
                         }
                     }
                     if (emptyCell !== null) {
-                        this.moveCellVertically(j, i, emptyCell);
+                        this.moveCellVertically(col, row, emptyCell);
                     }
                 }
             }
@@ -118,33 +118,33 @@ export class Board {
     };
 
     moveCellsLeft() {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 1; j < 4; j++) {
-                if (!this.cells[(i * 4 + j)].isEmpty) {
-                    let s = j - 1;
+        for (let col = 0; col < COLUMNS_COUNT; col++) {
+            for (let row = 1; row < COLUMNS_COUNT; row++) {
+                if (!this.cells[(col * COLUMNS_COUNT + row)].isEmpty) {
+                    let offset = row - 1;
                     let emptyCell = null;
 
-                    if (!this.cells[(i * 4 + s)].isEmpty) {
-                        if (this.cells[(i * 4 + s)].getValueCell() === this.cells[(i * 4 + j)].getValueCell() && !this.cells[(i * 4 + s)].getIsMergeCell()) {
-                            this.moveCellWithMergeHorizontally(i, j, s);
+                    if (!this.cells[(col * COLUMNS_COUNT + offset)].isEmpty) {
+                        if (this.cells[(col * COLUMNS_COUNT + offset)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell() && !this.cells[(col * COLUMNS_COUNT + offset)].getIsMergeCell()) {
+                            this.moveCellWithMergeHorizontally(col, row, offset);
                         }
                     } else {
-                        if (j <= 2) {
-                            if (this.cells[(i * 4 + j + 1)].getValueCell() === this.cells[(i * 4 + j)].getValueCell()) {
-                            this.moveCellWithMergeHorizontally(i, j + 1, s + 1);
+                        if (row <= 2) {
+                            if (this.cells[(col * COLUMNS_COUNT + row + 1)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell()) {
+                            this.moveCellWithMergeHorizontally(col, row + 1, offset + 1);
                             }
                         }
-                        emptyCell = s;
-                        s--;
-                        while (s >= 0) {
-                            if (this.cells[(i * 4 + s)].isEmpty) {
-                                emptyCell = s;
-                                s--;
+                        emptyCell = offset;
+                        offset--;
+                        while (offset >= 0) {
+                            if (this.cells[(col * COLUMNS_COUNT + offset)].isEmpty) {
+                                emptyCell = offset;
+                                offset--;
                             } else break;
                         }
                     }
                     if (emptyCell !== null) {
-                        this.moveCellHorizontally(j, i, emptyCell);
+                        this.moveCellHorizontally(row, col, emptyCell);
                     }
                 }
             }
@@ -153,33 +153,33 @@ export class Board {
     };
 
     moveCellsRight() {
-        for (let i = 0; i < 4; i++) {
-            for (let j = 2; j >= 0; j--) {
-                if (!this.cells[(i * 4 + j)].isEmpty) {
-                    let s = j + 1;
+        for (let col = 0; col < COLUMNS_COUNT; col++) {
+            for (let row = 2; row >= 0; row--) {
+                if (!this.cells[(col * COLUMNS_COUNT + row)].isEmpty) {
+                    let offset = row + 1;
                     let emptyCell = null;
 
-                    if (!this.cells[(i * 4 + s)].isEmpty) {
-                        if (this.cells[(i * 4 + s)].getValueCell() === this.cells[(i * 4 + j)].getValueCell() && !this.cells[(i * 4 + s)].getIsMergeCell()) {
-                            this.moveCellWithMergeHorizontally(i, j, s);
+                    if (!this.cells[(col * COLUMNS_COUNT + offset)].isEmpty) {
+                        if (this.cells[(col * COLUMNS_COUNT + offset)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell() && !this.cells[(col * COLUMNS_COUNT + offset)].getIsMergeCell()) {
+                            this.moveCellWithMergeHorizontally(col, row, offset);
                         }
                     } else {
-                        if (j >= 1) {
-                            if (this.cells[(i * 4 + j - 1)].getValueCell() === this.cells[(i * 4 + j)].getValueCell()) {
-                            this.moveCellWithMergeHorizontally(i, j - 1, s - 1);
+                        if (row >= 1) {
+                            if (this.cells[(col * COLUMNS_COUNT + row - 1)].getValueCell() === this.cells[(col * COLUMNS_COUNT + row)].getValueCell()) {
+                            this.moveCellWithMergeHorizontally(col, row - 1, offset - 1);
                             }
                         }
-                        emptyCell = s;
-                        s++;
-                        while (s < 4) {
-                            if (this.cells[(i * 4 + s)].isEmpty) {
-                                emptyCell = s;
-                                s++;
+                        emptyCell = offset;
+                        offset++;
+                        while (offset < COLUMNS_COUNT) {
+                            if (this.cells[(col * COLUMNS_COUNT + offset)].isEmpty) {
+                                emptyCell = offset;
+                                offset++;
                             } else break;
                         }
                     }
                     if (emptyCell !== null) {
-                        this.moveCellHorizontally(j, i, emptyCell);
+                        this.moveCellHorizontally(row, col, emptyCell);
                     }
                 }
             }
@@ -188,7 +188,7 @@ export class Board {
     };
 
     moveCellHorizontally(cellValue, columnValue, emptyCell) {
-        let value = this.cells[(columnValue * 4 + cellValue)].getValueCell();
+        let value = this.cells[(columnValue * COLUMNS_COUNT + cellValue)].getValueCell();
         this.cells[(columnValue * COLUMNS_COUNT + cellValue)].setClearCell();
         this.cells[columnValue * COLUMNS_COUNT + emptyCell].setColorCell(value);
         this.cells[columnValue * COLUMNS_COUNT + emptyCell].setValueCell(value);
